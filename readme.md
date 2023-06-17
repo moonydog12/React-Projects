@@ -21,4 +21,5 @@
    - Accessing global state
 
 > global state: State that many components might need
+>
 > local state: State needed only by one or few components

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Counter from './Counter'
 
 const messages = [
   'Learn React ⚛️',
@@ -12,10 +11,15 @@ const buttonStyle = {
   color: '#fff',
 }
 
+interface Styles {
+  backgroundColor: string
+  color: string
+}
+
 function App() {
   return (
     <div>
-      <Counter />
+      {/* <Counter /> */}
       <Steps />
     </div>
   )
@@ -56,20 +60,54 @@ function Steps() {
             <div className={step >= 3 ? 'active' : ''}>3</div>
           </div>
 
-          <p className="message">
-            Step {step}:{messages[step - 1]}
-          </p>
+          <StepMessage step={step}>
+            <span>{messages[step - 1]}</span>
+          </StepMessage>
+
           <div className="buttons">
-            <button style={buttonStyle} onClick={handlePrevious}>
-              Previous
-            </button>
-            <button style={buttonStyle} onClick={handleNext}>
-              Next
-            </button>
+            <Button styles={buttonStyle} onClick={handlePrevious}>
+              <span>⬅️ Previous</span>
+            </Button>
+
+            <Button styles={buttonStyle} onClick={handleNext}>
+              <span>➡️ Next</span>
+            </Button>
           </div>
         </div>
       )}
     </>
+  )
+}
+
+function StepMessage({
+  step,
+  children,
+}: {
+  step: number
+  children: JSX.Element
+}) {
+  return (
+    <div className="message">
+      <h3>Step {step}:</h3>
+      {children}
+    </div>
+  )
+}
+
+function Button({
+  styles,
+  onClick,
+  children,
+}: {
+  styles: Styles
+  onClick: () => void
+  children: JSX.Element
+}) {
+  const { backgroundColor, color } = styles
+  return (
+    <button onClick={onClick} style={{ color, backgroundColor }}>
+      {children}
+    </button>
   )
 }
 

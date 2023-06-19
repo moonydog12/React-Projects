@@ -23,3 +23,12 @@
 > global state: State that many components might need
 >
 > local state: State needed only by one or few components
+
+## Components
+
+### General Guidelines
+
+- More abstractions(new component) require more mental energy(cost)
+- Name a component according to **what it does** or **what it displays**
+- Never declare a new component inside anther component
+- Co-locate related components inside the same file

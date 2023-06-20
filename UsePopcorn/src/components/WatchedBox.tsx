@@ -1,30 +1,12 @@
-import { useState } from 'react'
+import { WatchedMovie } from '../interfaces'
 
-function WatchedBox({ tempWatchedData }) {
-  const [isOpen2, setIsOpen2] = useState(true)
-  const [watched, setWatched] = useState(tempWatchedData)
-
-  return (
-    <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen2((open) => !open)}
-      >
-        {isOpen2 ? '–' : '+'}
-      </button>
-      {isOpen2 && (
-        <>
-          <WatchedSummary watched={watched} />
-          <WatchedMoviesList watched={watched} />
-        </>
-      )}
-    </div>
-  )
+interface Props {
+  watched: WatchedMovie[]
 }
 
-function WatchedSummary({ watched }) {
-  const average = (arr) => {
-    return arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0)
+function WatchedSummary({ watched }: Props) {
+  const average = (arr: number[]) => {
+    return arr.reduce((acc, cur, _, arr) => acc + cur / arr.length, 0)
   }
 
   // derived states
@@ -57,7 +39,7 @@ function WatchedSummary({ watched }) {
   )
 }
 
-function WatchedMoviesList({ watched }) {
+function WatchedMoviesList({ watched }: Props) {
   return (
     <ul className="list">
       {watched.map((movie) => (
@@ -67,7 +49,7 @@ function WatchedMoviesList({ watched }) {
   )
 }
 
-function WatchedMovieItem({ movie }) {
+function WatchedMovieItem({ movie }: { movie: WatchedMovie }) {
   return (
     <li>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
@@ -90,4 +72,4 @@ function WatchedMovieItem({ movie }) {
   )
 }
 
-export default WatchedBox
+export { WatchedSummary, WatchedMoviesList, WatchedMovieItem }

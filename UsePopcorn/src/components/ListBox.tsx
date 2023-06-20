@@ -1,25 +1,4 @@
-import { ReactNode, useState } from 'react'
 import { Movie, Movies } from '../interfaces'
-
-interface Props {
-  children: ReactNode
-}
-
-function ListBox({ children }: Props) {
-  const [isOpen1, setIsOpen1] = useState(true)
-
-  return (
-    <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen1((open) => !open)}
-      >
-        {isOpen1 ? '–' : '+'}
-      </button>
-      {isOpen1 && children}
-    </div>
-  )
-}
 
 // Movie List
 function MovieList({ movies }: Movies) {
@@ -47,4 +26,4 @@ function MovieItem({ movie }: { movie: Movie }) {
   )
 }
 
-export { ListBox, MovieList, MovieItem }
+export { MovieList, MovieItem }

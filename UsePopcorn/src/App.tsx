@@ -1,7 +1,8 @@
 import { tempMovieData, tempWatchedData } from './data'
 import { Navbar, Logo, Search, NumResults } from './components/Navbar'
-import { ListBox, MovieList } from './components/ListBox'
-import WatchedBox from './components/WatchedBox'
+import Box from './components/Box'
+import { MovieList } from './components/ListBox'
+import { WatchedMoviesList, WatchedSummary } from './components/WatchedBox'
 import { useState, ReactNode } from 'react'
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData)
+  const [watched, setWatched] = useState(tempWatchedData)
 
   return (
     <>
@@ -20,10 +22,13 @@ export default function App() {
         <NumResults movies={movies} />
       </Navbar>
       <Main>
-        <ListBox>
+        <Box>
           <MovieList movies={movies} />
-        </ListBox>
-        <WatchedBox tempWatchedData={tempMovieData}></WatchedBox>
+        </Box>
+        <Box>
+          <WatchedMoviesList watched={watched} />
+          <WatchedSummary watched={watched} />
+        </Box>
       </Main>
     </>
   )

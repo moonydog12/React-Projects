@@ -1,22 +1,34 @@
 import { tempMovieData, tempWatchedData } from './data'
-import Navbar from './components/Navbar'
-import ListBox from './components/Listbox'
+import { Navbar, Logo, Search, NumResults } from './components/Navbar'
+import { ListBox, MovieList } from './components/ListBox'
 import WatchedBox from './components/WatchedBox'
+import { useState, ReactNode } from 'react'
+
+interface Props {
+  children: ReactNode
+}
 
 export default function App() {
+  const [movies, setMovies] = useState(tempMovieData)
+
   return (
     <>
-      <Navbar movies={tempMovieData} />
-      <Main />
+      {/* Component Composition */}
+      <Navbar>
+        <Logo />
+        <Search />
+        <NumResults movies={movies} />
+      </Navbar>
+      <Main>
+        <ListBox>
+          <MovieList movies={movies} />
+        </ListBox>
+        <WatchedBox tempWatchedData={tempMovieData}></WatchedBox>
+      </Main>
     </>
   )
 }
 
-function Main() {
-  return (
-    <main className="main">
-      <ListBox tempMovieData={tempMovieData} />
-      <WatchedBox tempWatchedData={tempWatchedData} />
-    </main>
-  )
+function Main({ children }: Props) {
+  return <main className="main">{children}</main>
 }

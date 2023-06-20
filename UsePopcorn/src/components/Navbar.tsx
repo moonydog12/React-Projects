@@ -1,5 +1,13 @@
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { Movies } from '../interfaces/index'
+
+interface Props {
+  children: ReactNode
+}
+
+function Navbar({ children }: Props) {
+  return <nav className="nav-bar">{children}</nav>
+}
 
 function Logo() {
   return (
@@ -32,14 +40,4 @@ function NumResults({ movies }: Movies) {
   )
 }
 
-function Navbar({ movies }: Movies) {
-  return (
-    <nav className="nav-bar">
-      <Logo />
-      <Search />
-      <NumResults movies={movies} />
-    </nav>
-  )
-}
-
-export default Navbar
+export { Navbar, Logo, Search, NumResults }

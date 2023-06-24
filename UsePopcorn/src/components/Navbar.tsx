@@ -1,8 +1,12 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, SetStateAction } from 'react'
 import { Movies } from '../interfaces/index'
 
 interface Props {
   children: ReactNode
+}
+
+interface SearchProps {
+  query: string
 }
 
 function Navbar({ children }: Props) {
@@ -18,9 +22,7 @@ function Logo() {
   )
 }
 
-function Search() {
-  const [query, setQuery] = useState('')
-
+function Search({ query, setQuery }: SearchProps) {
   return (
     <input
       className="search"

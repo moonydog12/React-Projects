@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import Expander from './challenges/Expander.jsx'
-import StarRating from './components/StarRating.tsx'
+// import Expander from './challenges/Expander.jsx'
+// import StarRating from './components/StarRating.tsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

@@ -7,6 +7,7 @@ interface Props {
 
 interface SearchProps {
   query: string
+  setQuery: (query: string) => void
 }
 
 function Navbar({ children }: Props) {

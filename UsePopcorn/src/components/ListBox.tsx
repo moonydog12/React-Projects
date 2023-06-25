@@ -1,7 +1,10 @@
 import { Movie, Movies } from '../interfaces'
 
-// Movie List
-function MovieList({ movies, onSelectMovie }: Movies) {
+interface MovieListProps extends Movies {
+  onSelectMovie: (id: string) => void
+}
+
+function MovieList({ movies, onSelectMovie }: MovieListProps) {
   return (
     <ul className="list list-movies">
       {movies?.map((movie) => (
@@ -11,7 +14,12 @@ function MovieList({ movies, onSelectMovie }: Movies) {
   )
 }
 
-function MovieItem({ movie, onSelectMovie }: { movie: Movie }) {
+interface MovieItemProps {
+  movie: Movie
+  onSelectMovie: (id: string) => void
+}
+
+function MovieItem({ movie, onSelectMovie }: MovieItemProps) {
   return (
     <li onClick={() => onSelectMovie(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />

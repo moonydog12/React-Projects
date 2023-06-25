@@ -9,14 +9,14 @@ import Loader from './components/Loader'
 import { useState, useEffect } from 'react'
 import { ImdbMovie } from './interfaces'
 
-const KEY = '165606b8'
+const API_KEY = '165606b8'
 
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData)
-  const [watched, setWatched] = useState(tempWatchedData)
+  const [movies, setMovies] = useState<ImdbMovie[]>(tempMovieData)
+  const [watched, setWatched] = useState<ImdbMovie[]>(tempWatchedData)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  const [query, setQuery] = useState('parasite')
+  const [query, setQuery] = useState('')
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const handleSelectMovie = (id: string) => {
@@ -31,44 +31,52 @@ export default function App() {
     setWatched((watched) => [...watched, movie])
   }
 
-  const handleDeleteWatched = (id) => {
+  const handleDeleteWatched = (id: string) => {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id))
   }
 
-  // code that will run at different moments:mount, re-render, unmount
-  useEffect(
-    () => {
-      async function fetchData() {
-        try {
-          setIsLoading(true)
-          setError('')
-          const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`)
-          if (!res.ok) throw new Error('Something went wrong with fetching movie')
-          const data = await res.json()
-          if (data.Response === 'False') throw new Error('Movie not found')
-          setMovies(data.Search)
-        } catch (error: any) {
-          setError(error.message)
-        } finally {
-          setIsLoading(false)
-        }
-      }
+  useEffect(() => {
+    const controller = new AbortController()
 
-      if (query.length < 3) {
-        setMovies([])
+    const fetchData = async () => {
+      try {
+        setIsLoading(true)
         setError('')
-        return
+        const res = await fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`, {
+          signal: controller.signal,
+        })
+        if (!res.ok) throw new Error('Something went wrong with fetching movie')
+        const data = await res.json()
+        if (data.Response === 'False') throw new Error('Movie not found')
+        setMovies(data.Search)
+        setError('')
+      } catch (error: any) {
+        if (error.name !== 'AbortError') {
+          setError(error.message)
+        }
+      } finally {
+        setIsLoading(false)
       }
+    }
 
-      fetchData()
-    },
-    // dependency array
-    [query]
-  )
+    if (query.length < 3) {
+      setMovies([])
+      setError('')
+      return
+    }
+
+    handleCloseMovie()
+    fetchData()
+
+    // Clean up
+    return () => {
+      // Cancel the current request each time the new one comes in to prevent race condition
+      controller.abort()
+    }
+  }, [query])
 
   return (
     <>
-      {/* Component Composition */}
       <Navbar>
         <Logo />
         <Search query={query} setQuery={setQuery} />

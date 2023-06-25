@@ -1,5 +1,5 @@
-import { ReactNode, SetStateAction } from 'react'
-import { Movies } from '../interfaces/index'
+import { ReactNode } from 'react'
+import { ImdbMovie } from '../interfaces/index'
 
 interface Props {
   children: ReactNode
@@ -35,7 +35,7 @@ function Search({ query, setQuery }: SearchProps) {
   )
 }
 
-function NumResults({ movies }: Movies) {
+function NumResults({ movies }: { movies: ImdbMovie[] }) {
   return (
     <p className="num-results">
       Found <strong>{movies.length}</strong> results

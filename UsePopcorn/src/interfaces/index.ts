@@ -12,6 +12,7 @@ export interface Movies {
 export interface WatchedMovie extends Movie {
   title: string
   poster: string
+  year: string
   runtime: number
   imdbRating: number
   userRating: number
@@ -21,10 +22,7 @@ export interface WatchedMovies {
   watched: WatchedMovie[]
 }
 
-export interface ImdbMovie {
-  Title: string
-  Year: string
-  Poster: string
+export interface ImdbMovie extends Movie {
   Runtime: string
   imdbRating: string
   Plot: string

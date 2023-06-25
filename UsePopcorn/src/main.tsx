@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 // import Expander from './challenges/Expander.jsx'
 // import StarRating from './components/StarRating.tsx'
+// import Convertor from './challenges/Convertor.jsx'
+
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <App />
+    {/* <Convertor /> */}
     {/* <StarRating
       maxRating={5}
       messages={['Terrible', 'Bad', 'OK', 'Good', 'Amazing']}

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import StarRating from './StarRating';
 import Loader from './Loader';
 import { ImdbMovie, WatchedMovie } from '../interfaces';
+import { useKLey } from '../useKey';
 
 const API_KEY = '165606b8';
 
@@ -57,20 +58,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }: Movie
     onCloseMovie();
   };
 
-  useEffect(() => {
-    const callback = (e: KeyboardEvent) => {
-      if (e.code === 'Escape') {
-        onCloseMovie();
-        console.log('closing');
-      }
-    };
-
-    document.addEventListener('keydown', callback);
-
-    return () => {
-      document.removeEventListener('keydown', callback);
-    };
-  }, [onCloseMovie]);
+  useKLey('Escape', onCloseMovie);
 
   useEffect(() => {
     const getMovieDetails = async () => {

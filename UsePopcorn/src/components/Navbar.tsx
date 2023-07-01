@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useRef } from 'react';
 import { ImdbMovie } from '../interfaces/index';
+import { useKLey } from '../useKey';
 
 interface Props {
   children: ReactNode;
@@ -25,18 +26,13 @@ function Logo() {
 
 function Search({ query, setQuery }: SearchProps) {
   const inputEl = useRef(null);
-  useEffect(() => {
-    const callback = (e: KeyboardEvent) => {
-      if (document.activeElement === inputEl.current) return;
-      if (e.code === 'Enter') {
-        inputEl.current.focus();
-        setQuery('');
-      }
-    };
 
-    document.addEventListener('keydown', callback);
-    return () => document.addEventListener('keydown', callback);
-  }, [setQuery]);
+  // Custom hook
+  useKLey('Enter', () => {
+    if (document.activeElement === inputEl.current) return;
+    inputEl.current.focus();
+    setQuery('');
+  });
 
   return (
     <input

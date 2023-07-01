@@ -4,12 +4,14 @@ import App from './App.tsx';
 // import Expander from './challenges/Expander.jsx'
 // import StarRating from './components/StarRating.tsx'
 // import Convertor from './challenges/Convertor.jsx'
+import Geolocation from './challenges/Geolocation';
 
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
+    <Geolocation />
     {/* <Convertor /> */}
     {/* <StarRating
       maxRating={5}

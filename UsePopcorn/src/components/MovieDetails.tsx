@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import StarRating from './StarRating';
 import Loader from './Loader';
 import { ImdbMovie, WatchedMovie } from '../interfaces';
@@ -15,7 +15,16 @@ interface MovieDetailsProps {
 function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }: MovieDetailsProps) {
   const [movie, setMovie] = useState<ImdbMovie | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [userRating, setUserRating] = useState<number>(NaN);
+  const [userRating, setUserRating] = useState<number | string>('');
+
+  // use to count how many times user click the rating star
+  // won't rerender the component
+  const countRef = useRef(0);
+
+  // Run whenever the user update the rating
+  useEffect(() => {
+    if (userRating) countRef.current++;
+  }, [userRating]);
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find((movie) => movie.imdbID === selectedId)?.userRating;
@@ -42,6 +51,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }: Movie
       imdbRating: Number(imdbRating),
       runtime: Number(runtime?.split(' ')[0]),
       userRating,
+      countRatingDecisions: countRef.current,
     };
     onAddWatched(newWatchedMovie);
     onCloseMovie();

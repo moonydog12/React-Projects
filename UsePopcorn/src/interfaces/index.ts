@@ -15,7 +15,8 @@ export interface WatchedMovie extends Movie {
   year: string;
   runtime: number;
   imdbRating: number;
-  userRating: number;
+  userRating: number | string;
+  countRatingDecisions: number;
 }
 
 export interface WatchedMovies {

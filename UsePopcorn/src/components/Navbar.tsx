@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import { ImdbMovie } from '../interfaces/index';
 
 interface Props {
@@ -24,6 +24,20 @@ function Logo() {
 }
 
 function Search({ query, setQuery }: SearchProps) {
+  const inputEl = useRef(null);
+  useEffect(() => {
+    const callback = (e: KeyboardEvent) => {
+      if (document.activeElement === inputEl.current) return;
+      if (e.code === 'Enter') {
+        inputEl.current.focus();
+        setQuery('');
+      }
+    };
+
+    document.addEventListener('keydown', callback);
+    return () => document.addEventListener('keydown', callback);
+  }, [setQuery]);
+
   return (
     <input
       className="search"
@@ -31,6 +45,7 @@ function Search({ query, setQuery }: SearchProps) {
       placeholder="Search movies..."
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      ref={inputEl}
     />
   );
 }

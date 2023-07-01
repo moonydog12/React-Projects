@@ -1,7 +1,7 @@
-import { Movie, Movies } from '../interfaces'
+import { Movie, Movies } from '../interfaces';
 
 interface MovieListProps extends Movies {
-  onSelectMovie: (id: string) => void
+  onSelectMovie: (id: string) => void;
 }
 
 function MovieList({ movies, onSelectMovie }: MovieListProps) {
@@ -11,12 +11,12 @@ function MovieList({ movies, onSelectMovie }: MovieListProps) {
         <MovieItem movie={movie} key={movie.imdbID} onSelectMovie={onSelectMovie} />
       ))}
     </ul>
-  )
+  );
 }
 
 interface MovieItemProps {
-  movie: Movie
-  onSelectMovie: (id: string) => void
+  movie: Movie;
+  onSelectMovie: (id: string) => void;
 }
 
 function MovieItem({ movie, onSelectMovie }: MovieItemProps) {
@@ -31,7 +31,7 @@ function MovieItem({ movie, onSelectMovie }: MovieItemProps) {
         </p>
       </div>
     </li>
-  )
+  );
 }
 
-export { MovieList, MovieItem }
+export { MovieList, MovieItem };

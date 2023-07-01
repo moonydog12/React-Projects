@@ -1,11 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
 // import Expander from './challenges/Expander.jsx'
 // import StarRating from './components/StarRating.tsx'
 // import Convertor from './challenges/Convertor.jsx'
 
-import './index.css'
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -18,4 +18,4 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <StarRating size={24} defaultRating={3} color="blue" /> */}
     {/* <Expander /> */}
   </React.StrictMode>
-)
+);

@@ -1,28 +1,28 @@
 // `https://api.frankfurter.app/latest?amount=100&from=EUR&to=USD`
 
-import { useEffect } from 'react'
-import { useState } from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-const countries = ['USD', 'EUR', 'CAD', 'INR']
+const countries = ['USD', 'EUR', 'CAD', 'INR'];
 
 export default function App() {
-  const [amount, setAmount] = useState(1)
-  const [fromCur, setFromCur] = useState('EUR')
-  const [toCur, setToCur] = useState('USD')
-  const [converted, setConverted] = useState('')
+  const [amount, setAmount] = useState(1);
+  const [fromCur, setFromCur] = useState('EUR');
+  const [toCur, setToCur] = useState('USD');
+  const [converted, setConverted] = useState('');
 
   useEffect(() => {
     async function convert() {
       const res = await fetch(
         `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCur}&to=${toCur}`
-      )
-      const data = await res.json()
-      setConverted(data.rates[toCur])
+      );
+      const data = await res.json();
+      setConverted(data.rates[toCur]);
     }
 
-    if (fromCur === toCur) return setConverted(amount)
-    convert()
-  }, [amount, fromCur, toCur])
+    if (fromCur === toCur) return setConverted(amount);
+    convert();
+  }, [amount, fromCur, toCur]);
 
   return (
     <div>
@@ -39,5 +39,5 @@ export default function App() {
       </select>
       <p>{converted}</p>
     </div>
-  )
+  );
 }

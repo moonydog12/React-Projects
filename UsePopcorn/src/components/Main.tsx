@@ -1,11 +1,11 @@
-import { ReactNode } from 'react'
+import { ReactNode } from 'react';
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 function Main({ children }: Props) {
-  return <main className="main">{children}</main>
+  return <main className="main">{children}</main>;
 }
 
-export default Main
+export default Main;

@@ -1,17 +1,17 @@
-import { ReactNode } from 'react'
-import { ImdbMovie } from '../interfaces/index'
+import { ReactNode } from 'react';
+import { ImdbMovie } from '../interfaces/index';
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface SearchProps {
-  query: string
-  setQuery: (query: string) => void
+  query: string;
+  setQuery: (query: string) => void;
 }
 
 function Navbar({ children }: Props) {
-  return <nav className="nav-bar">{children}</nav>
+  return <nav className="nav-bar">{children}</nav>;
 }
 
 function Logo() {
@@ -20,7 +20,7 @@ function Logo() {
       <span role="img">🍿</span>
       <h1>usePopcorn</h1>
     </div>
-  )
+  );
 }
 
 function Search({ query, setQuery }: SearchProps) {
@@ -32,7 +32,7 @@ function Search({ query, setQuery }: SearchProps) {
       value={query}
       onChange={(e) => setQuery(e.target.value)}
     />
-  )
+  );
 }
 
 function NumResults({ movies }: { movies: ImdbMovie[] }) {
@@ -40,7 +40,7 @@ function NumResults({ movies }: { movies: ImdbMovie[] }) {
     <p className="num-results">
       Found <strong>{movies.length}</strong> results
     </p>
-  )
+  );
 }
 
-export { Navbar, Logo, Search, NumResults }
+export { Navbar, Logo, Search, NumResults };

@@ -1,11 +1,11 @@
-import { useState, ReactNode } from 'react'
+import { useState, ReactNode } from 'react';
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 function Box({ children }: Props) {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div className="box">
@@ -14,7 +14,7 @@ function Box({ children }: Props) {
       </button>
       {isOpen && children}
     </div>
-  )
+  );
 }
 
-export default Box
+export default Box;

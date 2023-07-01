@@ -1,18 +1,18 @@
-import { WatchedMovie } from '../interfaces'
+import { WatchedMovie } from '../interfaces';
 
 interface Props {
-  watched: WatchedMovie[]
+  watched: WatchedMovie[];
 }
 
 function WatchedSummary({ watched }: Props) {
   const average = (arr: number[]) => {
-    return arr.reduce((acc, cur, _, arr) => acc + cur / arr.length, 0)
-  }
+    return arr.reduce((acc, cur, _, arr) => acc + cur / arr.length, 0);
+  };
 
   // derived states
-  const avgImdbRating = average(watched.map((movie) => movie.imdbRating))
-  const avgUserRating = average(watched.map((movie) => movie.userRating))
-  const avgRuntime = average(watched.map((movie) => movie.runtime))
+  const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
+  const avgUserRating = average(watched.map((movie) => movie.userRating));
+  const avgRuntime = average(watched.map((movie) => movie.runtime));
 
   return (
     <div className="summary">
@@ -36,7 +36,7 @@ function WatchedSummary({ watched }: Props) {
         </p>
       </div>
     </div>
-  )
+  );
 }
 
 function WatchedMoviesList({ watched, onDeleteWatched }: Props) {
@@ -46,7 +46,7 @@ function WatchedMoviesList({ watched, onDeleteWatched }: Props) {
         <WatchedMovieItem movie={movie} key={movie.imdbID} onDeleteWatched={onDeleteWatched} />
       ))}
     </ul>
-  )
+  );
 }
 
 function WatchedMovieItem({ movie, onDeleteWatched }: { movie: WatchedMovie }) {
@@ -73,7 +73,7 @@ function WatchedMovieItem({ movie, onDeleteWatched }: { movie: WatchedMovie }) {
         </button>
       </div>
     </li>
-  )
+  );
 }
 
-export { WatchedSummary, WatchedMoviesList, WatchedMovieItem }
+export { WatchedSummary, WatchedMoviesList, WatchedMovieItem };

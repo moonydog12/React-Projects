@@ -1,22 +1,22 @@
-import { Dispatch, MouseEventHandler, SetStateAction, useState } from 'react'
+import { Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
 
 interface Props {
-  maxRating?: number
-  color?: string
-  size?: number
-  messages?: string[]
-  className?: string
-  defaultRating?: number
-  onSetRating?: Dispatch<SetStateAction<number>>
+  maxRating?: number;
+  color?: string;
+  size?: number;
+  messages?: string[];
+  className?: string;
+  defaultRating?: number;
+  onSetRating?: Dispatch<SetStateAction<number>>;
 }
 
 interface Star {
-  onRate: MouseEventHandler
-  onHoverIn: MouseEventHandler
-  onHoverOut: MouseEventHandler
-  full: boolean
-  color: string
-  size: number
+  onRate: MouseEventHandler;
+  onHoverIn: MouseEventHandler;
+  onHoverOut: MouseEventHandler;
+  full: boolean;
+  color: string;
+  size: number;
 }
 
 function StarRating({
@@ -28,19 +28,19 @@ function StarRating({
   defaultRating = 0,
   onSetRating,
 }: Props) {
-  const [rating, setRating] = useState(defaultRating)
-  const [tempRating, setTempRating] = useState(defaultRating)
+  const [rating, setRating] = useState(defaultRating);
+  const [tempRating, setTempRating] = useState(defaultRating);
 
   const textStyle = {
     lineHeight: '1',
     margin: '0',
     color,
     fontSize: `${size / 1.5}px`,
-  }
+  };
 
   const handleRating = (rating: number) => {
-    setRating(rating)
-  }
+    setRating(rating);
+  };
 
   return (
     <div style={containerStyle} className={className}>
@@ -48,8 +48,8 @@ function StarRating({
         {Array.from({ length: maxRating }, (_, index) => (
           <Star
             onRate={() => {
-              handleRating(index + 1)
-              onSetRating(index + 1)
+              handleRating(index + 1);
+              onSetRating(index + 1);
             }}
             onHoverIn={() => setTempRating(index + 1)}
             onHoverOut={() => setTempRating(0)}
@@ -66,7 +66,7 @@ function StarRating({
           : tempRating || rating || ''}
       </p>
     </div>
-  )
+  );
 }
 
 function Star({ onRate, full, onHoverIn, onHoverOut, color, size }: Star) {
@@ -75,7 +75,7 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }: Star) {
     height: `${size}px`,
     display: 'block',
     cursor: 'pointer',
-  }
+  };
 
   return (
     <span
@@ -100,17 +100,17 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }: Star) {
         </svg>
       )}
     </span>
-  )
+  );
 }
 
 const containerStyle = {
   display: 'flex',
   alignItems: 'center',
   gap: '16px',
-}
+};
 
 const starContainerStyle = {
   display: 'flex',
-}
+};
 
-export default StarRating
+export default StarRating;

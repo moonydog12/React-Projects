@@ -73,3 +73,21 @@ Diffing is how React decides which DOM elements need to be added or modified.
 - When using events object in event handlers, we get access to a **synthetic event object**(React makes sure events work the same way across browsers)
 
 - Most **synthetic event bubble**
+
+## React hooks
+
+### What are react hooks?
+
+Special built-in functions that allow us to 'hook' into React internals:
+
+- Creating & accessing **state** from Fiber tree
+- Registering **side effects** in Fiber tree
+- Manual DOM selection
+- More...
+
+It Enables reusing of non-visual logic: we can compose multiple hooks into our own custom hooks
+
+### The RULES of hooks
+
+1. Only call hooks at the top level
+2. Only call hooks from React functions

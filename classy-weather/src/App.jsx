@@ -33,45 +33,18 @@ function formatDay(dateStr) {
   }).format(new Date(dateStr));
 }
 
-async function getWeather(location) {
-  try {
-    // 1) Getting location (geocoding)
-    const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}`);
-    const geoData = await geoRes.json();
-    console.log(geoData);
-
-    if (!geoData.results) throw new Error('Location not found');
-
-    const { latitude, longitude, timezone, name, country_code } = geoData.results.at(0);
-    console.log(`${name} ${convertToFlag(country_code)}`);
-
-    // 2) Getting actual weather
-    const weatherRes = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&timezone=${timezone}&daily=weathercode,temperature_2m_max,temperature_2m_min`
-    );
-    const weatherData = await weatherRes.json();
-    console.log(weatherData.daily);
-  } catch (err) {
-    console.err(err);
-  }
-}
-
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    location: '',
+    isLoading: false,
+    displayLocation: '',
+    weather: {},
+  };
 
-    // useState part in function component
-    this.state = {
-      location: 'taiwan',
-      isLoading: false,
-      displayLocation: '',
-      weather: {},
-    };
-
-    this.fetchWeather = this.fetchWeather.bind(this);
-  }
-
-  async fetchWeather() {
+  fetchWeather = async () => {
+    if (this.state.location.length < 2) {
+      return this.setState({ weather: {} });
+    }
     try {
       this.setState({ isLoading: true });
 
@@ -80,7 +53,6 @@ class App extends React.Component {
         `https://geocoding-api.open-meteo.com/v1/search?name=${this.state.location}`
       );
       const geoData = await geoRes.json();
-      console.log(geoData);
 
       if (!geoData.results) throw new Error('Location not found');
 
@@ -99,6 +71,22 @@ class App extends React.Component {
     } finally {
       this.setState({ isLoading: false });
     }
+  };
+
+  setLocation = (event) => this.setState({ location: event.target.value });
+
+  /* Life cycle methods */
+  // useEffect []
+  componentDidMount() {
+    this.setState({ location: localStorage.getItem('location') || '' });
+  }
+
+  // useEffect [location]
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.location !== prevState.location) {
+      this.fetchWeather();
+    }
+    localStorage.setItem('location', this.state.location);
   }
 
   // JSX part in function component
@@ -106,15 +94,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <h1>Classy Weather</h1>
-        <div>
-          <input
-            type="text"
-            placeholder="Search for location..."
-            value={this.state.location}
-            onChange={(event) => this.setState({ location: event.target.value })}
-          />
-        </div>
-        <button onClick={this.fetchWeather}>Get weather</button>
+        <Input location={this.state.location} onChangeLocation={this.setLocation} />
         {this.state.isLoading && <p className="loader">Loading</p>}
 
         {this.state.weather.weathercode && (
@@ -127,7 +107,27 @@ class App extends React.Component {
 
 export default App;
 
+class Input extends React.Component {
+  render() {
+    return (
+      <div>
+        <input
+          type="text"
+          placeholder="Search for location..."
+          value={this.props.location}
+          // child to parent communication
+          onChange={this.props.onChangeLocation}
+        />
+      </div>
+    );
+  }
+}
+
 class Weather extends React.Component {
+  componentWillUnmount() {
+    console.log('Weather will unmount');
+  }
+
   render() {
     // destructure props property
     const {
@@ -136,8 +136,6 @@ class Weather extends React.Component {
       time: dates,
       weathercode: codes,
     } = this.props.weather;
-
-    console.log(max, min, dates, codes);
 
     return (
       <div className="">

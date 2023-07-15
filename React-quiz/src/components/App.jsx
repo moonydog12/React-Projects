@@ -7,6 +7,7 @@ import StartScreen from './StartScreen'
 import Question from './Question'
 import NextButton from './NextButton'
 import ProgressBar from './ProgressBar'
+import FinishScreen from './FinishScreen'
 
 // useReducer way to track states
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   index: 0,
   answer: null,
   points: 0,
+  highScore: 0,
 }
 
 function reducer(state, action) {
@@ -60,16 +62,29 @@ function reducer(state, action) {
         answer: null,
       }
 
+    case 'finish':
+      return {
+        ...state,
+        status: 'finished',
+        highScore:
+          state.points > state.highScore ? state.points : state.highScore,
+      }
+
+    case 'restart':
+      return {
+        ...initialState,
+        questions: state.questions,
+        status: 'ready',
+      }
+
     default:
       throw new Error('Action unknown')
   }
 }
 
 function App() {
-  const [{ questions, status, index, answer, points }, dispatch] = useReducer(
-    reducer,
-    initialState
-  )
+  const [{ questions, status, index, answer, points, highScore }, dispatch] =
+    useReducer(reducer, initialState)
 
   // derived states
   const numQuestions = questions.length
@@ -108,8 +123,21 @@ function App() {
               dispatch={dispatch}
               answer={answer}
             />
-            <NextButton dispatch={dispatch} answer={answer} />
+            <NextButton
+              dispatch={dispatch}
+              answer={answer}
+              numQuestions={numQuestions}
+              index={index}
+            />
           </>
+        )}
+        {status === 'finished' && (
+          <FinishScreen
+            points={points}
+            maxPoints={maxPoints}
+            highScore={highScore}
+            dispatch={dispatch}
+          />
         )}
       </MainBody>
     </div>

@@ -5,6 +5,8 @@ import Loader from './Loader'
 import Error from './Error'
 import StartScreen from './StartScreen'
 import Question from './Question'
+import NextButton from './NextButton'
+import ProgressBar from './ProgressBar'
 
 // useReducer way to track states
 const initialState = {
@@ -50,17 +52,28 @@ function reducer(state, action) {
             : state.points,
       }
 
+    // Moving to next question
+    case 'nextQuestion':
+      return {
+        ...state,
+        index: state.index + 1,
+        answer: null,
+      }
+
     default:
       throw new Error('Action unknown')
   }
 }
 
 function App() {
-  const [{ questions, status, index, answer }, dispatch] = useReducer(
+  const [{ questions, status, index, answer, points }, dispatch] = useReducer(
     reducer,
     initialState
   )
+
+  // derived states
   const numQuestions = questions.length
+  const maxPoints = questions.reduce((prev, cur) => prev + cur.points, 0)
 
   useEffect(() => {
     fetch('http://localhost:8000/questions')
@@ -82,11 +95,21 @@ function App() {
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
         {status === 'active' && (
-          <Question
-            question={questions[index]}
-            dispatch={dispatch}
-            answer={answer}
-          />
+          <>
+            <ProgressBar
+              index={index}
+              numQuestions={numQuestions}
+              points={points}
+              maxPoints={maxPoints}
+              answer={answer}
+            />
+            <Question
+              question={questions[index]}
+              dispatch={dispatch}
+              answer={answer}
+            />
+            <NextButton dispatch={dispatch} answer={answer} />
+          </>
         )}
       </MainBody>
     </div>

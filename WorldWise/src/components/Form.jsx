@@ -2,9 +2,8 @@
 
 import { useState } from 'react';
 import Button from './Button';
-
 import styles from './Form.module.css';
-import { useNavigate } from 'react-router-dom';
+import BackButton from './BackButton';
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -16,10 +15,8 @@ export function convertToEmoji(countryCode) {
 
 function Form() {
   const [cityName, setCityName] = useState('');
-  const [country, setCountry] = useState('');
   const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState('');
-  const navigate = useNavigate();
 
   return (
     <form className={styles.form}>
@@ -55,15 +52,7 @@ function Form() {
         <Button type="primary">Add</Button>
 
         {/* navigate back */}
-        <Button
-          type={'back'}
-          onClick={(event) => {
-            event.preventDefault();
-            navigate(-1);
-          }}
-        >
-          &larr; Back
-        </Button>
+        <BackButton />
       </div>
     </form>
   );

@@ -1,5 +1,7 @@
-function StartScreen(props) {
-  const { numQuestions, dispatch } = props
+import { useQuiz } from '../contexts/QuizContext'
+
+function StartScreen() {
+  const { numQuestions, dispatch } = useQuiz()
 
   return (
     <div className="start">

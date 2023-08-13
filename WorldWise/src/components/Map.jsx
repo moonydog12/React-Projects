@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import styles from './Map.module.css';
+import { useNavigate } from 'react-router-dom'
+import styles from './Map.module.css'
 import {
   MapContainer,
   TileLayer,
@@ -7,35 +7,35 @@ import {
   Popup,
   useMap,
   useMapEvents,
-} from 'react-leaflet';
-import { useEffect, useState } from 'react';
-import { useCities } from '../contexts/CitiesContext';
-import { useGeolocation } from '../hooks/useGeolocation';
-import Button from '../components/Button';
-import { useUrlPosition } from '../hooks/useUrlPosition';
+} from 'react-leaflet'
+import { useEffect, useState } from 'react'
+import { useCities } from '../contexts/CitiesContext'
+import { useGeolocation } from '../hooks/useGeolocation'
+import Button from '../components/Button'
+import { useUrlPosition } from '../hooks/useUrlPosition'
 
 function Map() {
   // import global states
-  const { cities } = useCities();
-  const [mapPosition, setMapPosition] = useState([40, 0]);
+  const { cities } = useCities()
+  const [mapPosition, setMapPosition] = useState([40, 0])
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
     getPosition,
-  } = useGeolocation();
-  const [mapLat, mapLng] = useUrlPosition();
+  } = useGeolocation()
+  const [mapLat, mapLng] = useUrlPosition()
 
   useEffect(() => {
     if (mapLat && mapLng) {
-      setMapPosition([mapLat, mapLng]);
+      setMapPosition([mapLat, mapLng])
     }
-  }, [mapLat, mapLng]);
+  }, [mapLat, mapLng])
 
   useEffect(() => {
     if (geolocationPosition) {
-      setMapPosition([geolocationPosition.lat, geolocationPosition.lng]);
+      setMapPosition([geolocationPosition.lat, geolocationPosition.lng])
     }
-  }, [geolocationPosition]);
+  }, [geolocationPosition])
 
   return (
     <div className={styles.mapContainer}>
@@ -70,24 +70,24 @@ function Map() {
         <DetectClick />
       </MapContainer>
     </div>
-  );
+  )
 }
 
 function ChangeCenter({ position }) {
-  const map = useMap();
-  map.setView(position);
-  return null;
+  const map = useMap()
+  map.setView(position)
+  return null
 }
 
 function DetectClick() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useMapEvents({
     click: (e) => {
       // write the variable in the url, therefore we don't need another global state to store it
-      navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
+      navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`)
     },
-  });
+  })
 }
 
-export default Map;
+export default Map

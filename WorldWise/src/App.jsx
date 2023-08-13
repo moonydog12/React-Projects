@@ -10,35 +10,47 @@ import CountryList from './components/CountryList'
 import City from './components/City'
 import Form from './components/Form'
 import { CitiesProvider } from './contexts/CitiesContext'
+import { AuthProvider } from './contexts/FakeAuthContext'
+import ProtectedRoute from './pages/ProtectedRoute'
 
 function App() {
   return (
-    <CitiesProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Homepage />}></Route>
-          <Route path="product" element={<Product />}></Route>
-          <Route path="pricing" element={<Pricing />}></Route>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="app" element={<AppLayout />}>
-            <Route index element={<Navigate to="cities" replace />}></Route>
+    <AuthProvider>
+      <CitiesProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Homepage />}></Route>
+            <Route path="product" element={<Product />}></Route>
+            <Route path="pricing" element={<Pricing />}></Route>
+            <Route path="login" element={<Login />}></Route>
+            <Route
+              path="app"
+              element={
+                // Protected route
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Navigate to="cities" replace />}></Route>
 
-            {/* nested route */}
-            {/* ex. app/cities */}
-            <Route path="cities" element={<CityList />}></Route>
+              {/* nested route */}
+              {/* ex. app/cities */}
+              <Route path="cities" element={<CityList />}></Route>
 
-            {/* dynamic routes : routes with url parameters */}
-            <Route path="cities/:id" element={<City />}></Route>
+              {/* dynamic routes : routes with url parameters */}
+              <Route path="cities/:id" element={<City />}></Route>
 
-            <Route path="countries" element={<CountryList />}></Route>
-            <Route path="form" element={<Form />}></Route>
-          </Route>
+              <Route path="countries" element={<CountryList />}></Route>
+              <Route path="form" element={<Form />}></Route>
+            </Route>
 
-          {/* catching route */}
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
-      </BrowserRouter>
-    </CitiesProvider>
+            {/* catching route */}
+            <Route path="*" element={<NotFound />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </CitiesProvider>
+    </AuthProvider>
   )
 }
 

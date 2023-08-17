@@ -1,4 +1,4 @@
-import PageNav from '../components/PageNav'
+import PageNav from '../components/PageNav';
 
 function NotFound() {
   return (
@@ -6,7 +6,7 @@ function NotFound() {
       <PageNav />
       😔
     </div>
-  )
+  );
 }
 
-export default NotFound
+export default NotFound;

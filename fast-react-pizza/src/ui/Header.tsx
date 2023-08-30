@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import SearchOrder from '../features/order/SearchOrder'
+import { Link } from 'react-router-dom';
+import SearchOrder from '../features/order/SearchOrder';
 
 function Header() {
   return (
@@ -8,7 +8,7 @@ function Header() {
       <SearchOrder />
       <p>Moonydog12</p>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;

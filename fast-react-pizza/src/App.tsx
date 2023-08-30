@@ -1,17 +1,18 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import Home from './ui/Home'
-import Error from './ui/Error'
-import Menu, { loader as menuLoader } from './features/menu/Menu'
-import Cart from './features/cart/Cart'
-import CreateOrder from './features/order/CreateOrder'
-import { loader as orderLoader } from './features/order/Order'
-import Order from './features/order/Order'
-import AppLayout from './ui/AppLayout'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Home from './ui/Home';
+import Error from './ui/ErrorFC';
+import Menu, { loader as menuLoader } from './features/menu/Menu';
+import Cart from './features/cart/Cart';
+import CreateOrder from './features/order/CreateOrder';
+import { loader as orderLoader } from './features/order/Order';
+import Order from './features/order/Order';
+import AppLayout from './ui/AppLayout';
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
     errorElement: <Error />,
+
     // define child route(routes defined here become nested route of AppLayout)
     children: [
       { path: '/', element: <Home /> },
@@ -34,8 +35,8 @@ const router = createBrowserRouter([
       },
     ],
   },
-])
+]);
 
 export default function App() {
-  return <RouterProvider router={router}></RouterProvider>
+  return <RouterProvider router={router}></RouterProvider>;
 }

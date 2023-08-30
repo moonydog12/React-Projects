@@ -1,12 +1,12 @@
-import Header from './Header'
-import Spinner from './Spinner'
-import CartOverview from '../features/cart/CartOverview'
-import { Outlet, useNavigation } from 'react-router-dom'
+import Header from './Header';
+import Spinner from './Spinner';
+import CartOverview from '../features/cart/CartOverview';
+import { Outlet, useNavigation } from 'react-router-dom';
 
 function AppLayout() {
   // react router hook that provides status indicator
-  const navigation = useNavigation()
-  const isLoading = navigation.state === 'loading'
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
 
   return (
     <div className="layout">
@@ -18,7 +18,7 @@ function AppLayout() {
       </main>
       <CartOverview />
     </div>
-  )
+  );
 }
 
-export default AppLayout
+export default AppLayout;

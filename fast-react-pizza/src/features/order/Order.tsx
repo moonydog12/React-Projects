@@ -1,43 +1,43 @@
 // Test ID: IIDSAT
 
-import { useLoaderData } from 'react-router-dom';
-import { getOrder } from '../../ui/services/apiRestaurant';
-import { calcMinutesLeft, formatCurrency, formatDate } from '../../utils/helpers';
+import { useLoaderData } from 'react-router-dom'
+import { getOrder } from '../../ui/services/apiRestaurant'
+import { calcMinutesLeft, formatCurrency, formatDate } from '../../utils/helpers'
 
 type loaderProps = {
-  orderId: string;
-};
+  orderId: string
+}
 
 type cartItem = {
-  name: string;
-  pizzaId: number;
-  quantity: number;
-  totalPrice: number;
-  unitPrice: number;
-};
+  name: string
+  pizzaId: number
+  quantity: number
+  totalPrice: number
+  unitPrice: number
+}
 
 type OrderProps = {
-  customer: string;
-  id: string;
-  status: string;
-  orderPrice: number;
-  priority: boolean;
-  priorityPrice: number;
-  cart: cartItem[];
-  estimatedDelivery: Date;
-};
+  customer: string
+  id: string
+  status: string
+  orderPrice: number
+  priority: boolean
+  priorityPrice: number
+  cart: cartItem[]
+  estimatedDelivery: Date
+}
 
 export async function loader({ params }: { params: loaderProps }) {
-  const order = await getOrder(params.orderId);
-  return order;
+  const order = await getOrder(params.orderId)
+  return order
 }
 
 function Order() {
-  const order = useLoaderData() as OrderProps;
+  const order = useLoaderData() as OrderProps
 
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
-  const { id, status, priority, priorityPrice, orderPrice, estimatedDelivery, cart } = order;
-  const deliveryIn = calcMinutesLeft(estimatedDelivery);
+  const { id, status, priority, priorityPrice, orderPrice, estimatedDelivery, cart } = order
+  const deliveryIn = calcMinutesLeft(estimatedDelivery)
 
   return (
     <div>
@@ -65,7 +65,7 @@ function Order() {
         <p>To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}</p>
       </div>
     </div>
-  );
+  )
 }
 
-export default Order;
+export default Order

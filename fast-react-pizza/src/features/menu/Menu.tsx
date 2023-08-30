@@ -1,25 +1,25 @@
-import { useLoaderData } from 'react-router-dom';
-import { getMenu } from '../../ui/services/apiRestaurant';
-import MenuItem from './MenuItem';
+import { useLoaderData } from 'react-router-dom'
+import { getMenu } from '../../ui/services/apiRestaurant'
+import MenuItem from './MenuItem'
 
 type Pizza = {
-  id: number;
-  name: string;
-  unitPrice: number;
-  imageUrl: string;
-  ingredients: string[];
-  soldOut: boolean;
-};
+  id: number
+  name: string
+  unitPrice: number
+  imageUrl: string
+  ingredients: string[]
+  soldOut: boolean
+}
 
 // Loader function
 export async function loader() {
-  const menu = await getMenu();
+  const menu = await getMenu()
 
-  return menu;
+  return menu
 }
 
 function Menu() {
-  const menu = useLoaderData() as Pizza[];
+  const menu = useLoaderData() as Pizza[]
 
   return (
     <ul>
@@ -27,7 +27,7 @@ function Menu() {
         <MenuItem pizza={pizza} key={pizza.id} />
       ))}
     </ul>
-  );
+  )
 }
 
-export default Menu;
+export default Menu

@@ -1,9 +1,12 @@
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom'
 import { createOrder } from '../../ui/services/apiRestaurant'
+import Button from '../../ui/Button'
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
-  /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(str)
+  /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
+    str,
+  )
 
 const fakeCart = [
   {
@@ -43,13 +46,13 @@ function CreateOrder() {
       <Form method="POST">
         <div>
           <label>First Name</label>
-          <input type="text" name="customer" required />
+          <input className="input" type="text" name="customer" required />
         </div>
 
         <div>
           <label>Phone number</label>
           <div>
-            <input type="tel" name="phone" required />
+            <input className="input" type="tel" name="phone" required />
           </div>
           {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
@@ -57,12 +60,13 @@ function CreateOrder() {
         <div>
           <label>Address</label>
           <div>
-            <input type="text" name="address" required />
+            <input className="input" type="text" name="address" required />
           </div>
         </div>
 
         <div>
           <input
+            className="h-6 w-6 accent-yellow-400 focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-offset-2"
             type="checkbox"
             name="priority"
             id="priority"
@@ -73,7 +77,9 @@ function CreateOrder() {
         </div>
 
         <div>
-          <button disabled={isSubmitting}>{isSubmitting ? 'Placing order...' : 'Order now'}</button>
+          <Button disabled={isSubmitting}>
+            {isSubmitting ? 'Placing order...' : 'Order now'}
+          </Button>
           <input type="hidden" name="cart" value={JSON.stringify(fakeCart)} />
         </div>
       </Form>
@@ -95,17 +101,19 @@ export async function action({ request }) {
 
   // Error handling
   if (!isValidPhone(order.phone)) {
-    errors.phone = 'Please give us your correct phone number. We might need it to contact you.'
+    errors.phone =
+      'Please give us your correct phone number. We might need it to contact you.'
   }
   if (Object.keys(errors).length > 0) {
     return errors
   }
 
   // If data are all validated,create new order and redirect
-  const newOrder = await createOrder(order)
+  // const newOrder = await createOrder(order)
 
   // Can't use useNavigation hook here, using the browser api way to redirect alternatively
-  return redirect(`/order/${newOrder.id}`)
+  // return redirect(`/order/${newOrder.id}`)
+  return null
 }
 
 export default CreateOrder

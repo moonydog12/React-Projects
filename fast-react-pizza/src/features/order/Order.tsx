@@ -2,7 +2,11 @@
 
 import { useLoaderData } from 'react-router-dom'
 import { getOrder } from '../../ui/services/apiRestaurant'
-import { calcMinutesLeft, formatCurrency, formatDate } from '../../utils/helpers'
+import {
+  calcMinutesLeft,
+  formatCurrency,
+  formatDate,
+} from '../../utils/helpers'
 
 type loaderProps = {
   orderId: string
@@ -36,7 +40,15 @@ function Order() {
   const order = useLoaderData() as OrderProps
 
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
-  const { id, status, priority, priorityPrice, orderPrice, estimatedDelivery, cart } = order
+  const {
+    id,
+    status,
+    priority,
+    priorityPrice,
+    orderPrice,
+    estimatedDelivery,
+    cart,
+  } = order
   const deliveryIn = calcMinutesLeft(estimatedDelivery)
 
   return (

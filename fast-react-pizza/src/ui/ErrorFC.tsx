@@ -1,7 +1,7 @@
-import { useNavigate, useRouteError, isRouteErrorResponse } from 'react-router-dom'
+import { useRouteError, isRouteErrorResponse } from 'react-router-dom'
+import LinkButton from './LinkButton'
 
 function ErrorFC() {
-  const navigate = useNavigate()
   const error = useRouteError()
   let errorMessage: string
 
@@ -20,7 +20,7 @@ function ErrorFC() {
     <div>
       <h1>Something went wrong 😢</h1>
       <p>{errorMessage}</p>
-      <button onClick={() => navigate(-1)}>&larr; Go back</button>
+      <LinkButton to="-1">&larr; Go back</LinkButton>
     </div>
   )
 }

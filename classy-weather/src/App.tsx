@@ -1,36 +1,25 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { ChangeEvent } from 'react'
+import { getWeatherIcon, convertToFlag, formatDay } from './utils'
 
-function getWeatherIcon(wmoCode) {
-  const icons = new Map([
-    [[0], '☀️'],
-    [[1], '🌤'],
-    [[2], '⛅️'],
-    [[3], '☁️'],
-    [[45, 48], '🌫'],
-    [[51, 56, 61, 66, 80], '🌦'],
-    [[53, 55, 63, 65, 57, 67, 81, 82], '🌧'],
-    [[71, 73, 75, 77, 85, 86], '🌨'],
-    [[95], '🌩'],
-    [[96, 99], '⛈'],
-  ]);
-  const arr = [...icons.keys()].find((key) => key.includes(wmoCode));
-  if (!arr) return 'NOT FOUND';
-  return icons.get(arr);
+type InputProps = {
+  location: string
+  onChangeLocation: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
-function convertToFlag(countryCode) {
-  const codePoints = countryCode
-    .toUpperCase()
-    .split('')
-    .map((char) => 127397 + char.charCodeAt());
-  return String.fromCodePoint(...codePoints);
+type TWeather = {
+  temperature_2m_max: number[]
+  temperature_2m_min: number[]
+  time: Date[]
+  weathercode: number[]
 }
 
-function formatDay(dateStr) {
-  return new Intl.DateTimeFormat('en', {
-    weekday: 'short',
-  }).format(new Date(dateStr));
+type DayProps = {
+  date: Date
+  max: number
+  min: number
+  code: number
+  isToday: boolean
 }
 
 class App extends React.Component {
@@ -39,54 +28,58 @@ class App extends React.Component {
     isLoading: false,
     displayLocation: '',
     weather: {},
-  };
+  }
 
   fetchWeather = async () => {
     if (this.state.location.length < 2) {
-      return this.setState({ weather: {} });
+      return this.setState({ weather: {} })
     }
     try {
-      this.setState({ isLoading: true });
+      this.setState({ isLoading: true })
 
       // 1) Getting location (geocoding)
       const geoRes = await fetch(
         `https://geocoding-api.open-meteo.com/v1/search?name=${this.state.location}`
-      );
-      const geoData = await geoRes.json();
+      )
+      const geoData = await geoRes.json()
 
-      if (!geoData.results) throw new Error('Location not found');
+      if (!geoData.results) throw new Error('Location not found')
 
-      const { latitude, longitude, timezone, name, country_code } = geoData.results.at(0);
+      const { latitude, longitude, timezone, name, country_code } = geoData.results.at(0)
 
-      this.setState({ displayLocation: `${name} ${convertToFlag(country_code)}` });
+      this.setState({ displayLocation: `${name} ${convertToFlag(country_code)}` })
 
       // 2) Getting actual weather
       const weatherRes = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&timezone=${timezone}&daily=weathercode,temperature_2m_max,temperature_2m_min`
-      );
-      const weatherData = await weatherRes.json();
-      this.setState({ weather: weatherData.daily });
+      )
+      const weatherData = await weatherRes.json()
+      this.setState({ weather: weatherData.daily })
     } catch (err) {
-      console.err(err);
+      console.error(err)
     } finally {
-      this.setState({ isLoading: false });
+      this.setState({ isLoading: false })
     }
-  };
+  }
 
-  setLocation = (event) => this.setState({ location: event.target.value });
+  setLocation = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputElement = event.target as HTMLInputElement
+    if (!inputElement) return
+    this.setState({ location: inputElement.value })
+  }
 
   /* Life cycle methods */
   // useEffect []
   componentDidMount() {
-    this.setState({ location: localStorage.getItem('location') || '' });
+    this.setState({ location: localStorage.getItem('location') || '' })
   }
 
   // useEffect [location]
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: any, prevState: { location: string }) {
     if (this.state.location !== prevState.location) {
-      this.fetchWeather();
+      this.fetchWeather()
     }
-    localStorage.setItem('location', this.state.location);
+    localStorage.setItem('location', this.state.location)
   }
 
   // JSX part in function component
@@ -101,13 +94,13 @@ class App extends React.Component {
           <Weather weather={this.state.weather} location={this.state.displayLocation} />
         )}
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
 
-class Input extends React.Component {
+class Input extends React.Component<InputProps> {
   render() {
     return (
       <div>
@@ -119,13 +112,13 @@ class Input extends React.Component {
           onChange={this.props.onChangeLocation}
         />
       </div>
-    );
+    )
   }
 }
 
-class Weather extends React.Component {
+class Weather extends React.Component<{ weather: TWeather; location: string }> {
   componentWillUnmount() {
-    console.log('Weather will unmount');
+    console.log('Weather will unmount')
   }
 
   render() {
@@ -135,7 +128,7 @@ class Weather extends React.Component {
       temperature_2m_max: min,
       time: dates,
       weathercode: codes,
-    } = this.props.weather;
+    } = this.props.weather
 
     return (
       <div className="">
@@ -144,22 +137,22 @@ class Weather extends React.Component {
           {dates.map((date, index) => (
             <Day
               date={date}
-              max={max.at(index)}
-              min={min.at(index)}
-              code={codes.at(index)}
-              key={date}
+              max={max[index]}
+              min={min[index]}
+              code={codes[index]}
+              key={index}
               isToday={index === 0}
             />
           ))}
         </ul>
       </div>
-    );
+    )
   }
 }
 
-class Day extends React.Component {
+class Day extends React.Component<DayProps> {
   render() {
-    const { date, max, min, code, isToday } = this.props;
+    const { date, max, min, code, isToday } = this.props
     return (
       <li className="day">
         <span>{getWeatherIcon(code)}</span>
@@ -168,6 +161,6 @@ class Day extends React.Component {
           {Math.floor(min)}&deg; &mdash;<strong>{Math.ceil(max)}&deg;</strong>
         </p>
       </li>
-    );
+    )
   }
 }

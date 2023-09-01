@@ -4,8 +4,8 @@ import Button from '../../ui/Button'
 function CreateUser() {
   const [username, setUsername] = useState('')
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
   }
 
   return (

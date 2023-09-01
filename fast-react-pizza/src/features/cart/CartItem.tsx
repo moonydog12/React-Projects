@@ -1,7 +1,14 @@
 import Button from '../../ui/Button'
 import { formatCurrency } from '../../utils/helpers'
 
-function CartItem({ item }) {
+type Props = {
+  pizzaId: number
+  name: string
+  quantity: number
+  totalPrice: number
+}
+
+function CartItem({ item }: { item: Props }) {
   const { pizzaId, name, quantity, totalPrice } = item
 
   return (

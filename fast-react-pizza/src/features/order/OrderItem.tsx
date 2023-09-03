@@ -1,6 +1,20 @@
 import { formatCurrency } from '../../utils/helpers'
 
-function OrderItem({ item, isLoadingIngredients, ingredients }) {
+type Item = {
+  name: string
+  pizzaId: number
+  quantity: number
+  totalPrice: number
+  unitPrice: number
+}
+
+type Props = {
+  item: Item
+  isLoadingIngredients: boolean
+  ingredients: string[]
+}
+
+function OrderItem({ item, isLoadingIngredients, ingredients }: Props) {
   const { quantity, name, totalPrice } = item
 
   return (

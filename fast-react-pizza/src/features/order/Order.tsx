@@ -34,6 +34,15 @@ type OrderProps = {
   estimatedDelivery: Date
 }
 
+type Pizza = {
+  id: number
+  name: string
+  unitPrice: number
+  imageUrl: string
+  soldOut: boolean
+  ingredients: string[]
+}
+
 export async function loader({ params }: { params: loaderProps }) {
   const order = await getOrder(params.orderId)
   return order
@@ -96,8 +105,8 @@ function Order() {
             key={item.pizzaId}
             isLoadingIngredients={fetcher.state === 'loading'}
             ingredients={
-              fetcher.data?.find((el) => el.id === item.pizzaId).ingredients ??
-              []
+              fetcher.data?.find((el: Pizza) => el.id === item.pizzaId)
+                .ingredients ?? []
             }
           />
         ))}
@@ -117,7 +126,7 @@ function Order() {
         </p>
       </div>
 
-      {!priority && <UpdateOrder order={order} />}
+      {!priority && <UpdateOrder />}
     </div>
   )
 }

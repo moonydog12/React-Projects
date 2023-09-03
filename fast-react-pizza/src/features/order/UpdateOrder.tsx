@@ -2,7 +2,11 @@ import { useFetcher } from 'react-router-dom'
 import Button from '../../ui/Button'
 import { updateOrder } from '../../ui/services/apiRestaurant'
 
-function UpdateOrder({ order }) {
+type MyParams = {
+  orderId: string
+}
+
+function UpdateOrder() {
   const fetcher = useFetcher()
   return (
     <fetcher.Form method="PATCH" className="text-right">
@@ -13,7 +17,7 @@ function UpdateOrder({ order }) {
 
 export default UpdateOrder
 
-export async function action({ request, params }) {
+export async function action({ params }: { params: MyParams }) {
   const data = { priority: true }
   await updateOrder(params.orderId, data)
   return null

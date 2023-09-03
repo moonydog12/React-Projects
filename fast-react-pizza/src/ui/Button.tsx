@@ -5,7 +5,7 @@ type Props = {
   disabled?: boolean
   to?: string
   type?: 'primary' | 'secondary' | 'small' | 'round' | 'default'
-  onClick?: (event: MouseEvent) => void
+  onClick?: (event?: React.MouseEvent) => void
 }
 
 function Button({ children, disabled, to, type = 'default', onClick }: Props) {

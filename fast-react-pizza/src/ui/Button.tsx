@@ -4,8 +4,8 @@ type Props = {
   children: React.ReactNode
   disabled?: boolean
   to?: string
-  type?: 'primary' | 'secondary' | 'small' | 'round'
-  onClick?: () => void
+  type?: 'primary' | 'secondary' | 'small' | 'round' | 'default'
+  onClick?: (event: MouseEvent) => void
 }
 
 function Button({ children, disabled, to, type = 'default', onClick }: Props) {

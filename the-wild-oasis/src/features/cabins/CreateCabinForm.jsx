@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-import Input from "../../ui/Input";
-import Form from "../../ui/Form";
-import Button from "../../ui/Button";
-import FileInput from "../../ui/FileInput";
-import Textarea from "../../ui/Textarea";
+import Input from '../../ui/Input'
+import Form from '../../ui/Form'
+import Button from '../../ui/Button'
+import FileInput from '../../ui/FileInput'
+import Textarea from '../../ui/Textarea'
 
 const FormRow = styled.div`
   display: grid;
@@ -31,16 +31,16 @@ const FormRow = styled.div`
     justify-content: flex-end;
     gap: 1.2rem;
   }
-`;
+`
 
 const Label = styled.label`
   font-weight: 500;
-`;
+`
 
 const Error = styled.span`
   font-size: 1.4rem;
   color: var(--color-red-700);
-`;
+`
 
 function CreateCabinForm() {
   return (
@@ -83,7 +83,7 @@ function CreateCabinForm() {
         <Button>Edit cabin</Button>
       </FormRow>
     </Form>
-  );
+  )
 }
 
-export default CreateCabinForm;
+export default CreateCabinForm

@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import Button from "../../ui/Button";
-import FileInput from "../../ui/FileInput";
-import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
+import Button from '../../ui/Button'
+import FileInput from '../../ui/FileInput'
+import Form from '../../ui/Form'
+import FormRow from '../../ui/FormRow'
+import Input from '../../ui/Input'
 
-import { useUser } from "./useUser";
+import { useUser } from './useUser'
 
 function UpdateUserDataForm() {
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
@@ -15,13 +15,13 @@ function UpdateUserDataForm() {
       email,
       user_metadata: { fullName: currentFullName },
     },
-  } = useUser();
+  } = useUser()
 
-  const [fullName, setFullName] = useState(currentFullName);
-  const [avatar, setAvatar] = useState(null);
+  const [fullName, setFullName] = useState(currentFullName)
+  const [avatar, setAvatar] = useState(null)
 
   function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
   }
 
   return (
@@ -38,11 +38,7 @@ function UpdateUserDataForm() {
         />
       </FormRow>
       <FormRow label="Avatar image">
-        <FileInput
-          id="avatar"
-          accept="image/*"
-          onChange={(e) => setAvatar(e.target.files[0])}
-        />
+        <FileInput id="avatar" accept="image/*" onChange={(e) => setAvatar(e.target.files[0])} />
       </FormRow>
       <FormRow>
         <Button type="reset" variation="secondary">
@@ -51,7 +47,7 @@ function UpdateUserDataForm() {
         <Button>Update account</Button>
       </FormRow>
     </Form>
-  );
+  )
 }
 
-export default UpdateUserDataForm;
+export default UpdateUserDataForm

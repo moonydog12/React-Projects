@@ -1,9 +1,9 @@
-import { add } from 'date-fns';
+import { add } from 'date-fns'
 
 function fromToday(numDays, withTime = false) {
-  const date = add(new Date(), { days: numDays });
-  if (!withTime) date.setUTCHours(0, 0, 0, 0);
-  return date.toISOString().slice(0, -1);
+  const date = add(new Date(), { days: numDays })
+  if (!withTime) date.setUTCHours(0, 0, 0, 0)
+  return date.toISOString().slice(0, -1)
 }
 
 export const bookings = [
@@ -15,8 +15,7 @@ export const bookings = [
     cabinId: 1,
     guestId: 2,
     hasBreakfast: true,
-    observations:
-      'I have a gluten allergy and would like to request a gluten-free breakfast.',
+    observations: 'I have a gluten allergy and would like to request a gluten-free breakfast.',
     isPaid: false,
     numGuests: 1,
   },
@@ -191,8 +190,7 @@ export const bookings = [
     cabinId: 6,
     guestId: 17,
     hasBreakfast: false,
-    observations:
-      "We will be checking in late, around midnight. Hope that's okay :)",
+    observations: "We will be checking in late, around midnight. Hope that's okay :)",
     isPaid: true,
     numGuests: 6,
   },
@@ -290,4 +288,4 @@ export const bookings = [
     isPaid: true,
     numGuests: 7,
   },
-];
+]

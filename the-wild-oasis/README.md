@@ -1,8 +1,13 @@
-# React + Vite
+# Wild-Oasis
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## What is React Query
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Powerful library for managing "remove(server)" state
+- Features that allow developer to write less code
+  - Data is stored in a cache
+  - Auto loading
+  - Auto re-fetching
+  - Pre-fetching
+  - Remove state mutation
+  - Offline support
+- Needed because remove state is different from UI state

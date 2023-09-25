@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { HiEllipsisVertical } from 'react-icons/hi2'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import useOutSideClick from '../hooks/useOutSideClick'
 
 const Menu = styled.div`
@@ -80,6 +81,10 @@ function Menus({ children }) {
   )
 }
 
+Menus.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
 function Toggle({ id }) {
   const { openId, close, open, setPosition } = useContext(MenusContext)
   const handleClick = (event) => {
@@ -100,6 +105,10 @@ function Toggle({ id }) {
   )
 }
 
+Toggle.propTypes = {
+  id: PropTypes.string.isRequired,
+}
+
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext)
   const ref = useOutSideClick(close)
@@ -112,6 +121,11 @@ function List({ id, children }) {
     </StyledList>,
     document.querySelector('body'),
   )
+}
+
+List.propTypes = {
+  id: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 function Button({ children, icon, onClick }) {
@@ -130,6 +144,12 @@ function Button({ children, icon, onClick }) {
       </StyledButton>
     </li>
   )
+}
+
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  icon: PropTypes.node.isRequired,
+  onClick: PropTypes.func,
 }
 
 Menus.Menu = Menu

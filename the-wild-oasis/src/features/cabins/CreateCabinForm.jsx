@@ -8,6 +8,7 @@ import Textarea from '../../ui/Textarea'
 import FormRow from '../../ui/FormRow'
 import { useCreateCabin } from './useCreateCabin'
 import { useEditCabin } from './useEditCabin'
+import PropTypes from 'prop-types'
 
 const formValidationMessage = 'This field is required'
 
@@ -146,6 +147,18 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
       </FormRow>
     </Form>
   )
+}
+
+CreateCabinForm.propTypes = {
+  cabinToEdit: PropTypes.shape({
+    id: PropTypes.number,
+
+    // Define the shape of the cabinToEdit object here
+    name: PropTypes.string,
+    maxCapacity: PropTypes.number,
+    regularPrice: PropTypes.number,
+  }),
+  onCloseModal: PropTypes.func,
 }
 
 export default CreateCabinForm

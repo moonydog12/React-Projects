@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { HiXMark } from 'react-icons/hi2'
 import styled from 'styled-components'
 import useOutSideClick from '../hooks/useOutSideClick'
+import PropTypes from 'prop-types'
 
 const StyledModal = styled.div`
   position: fixed;
@@ -68,6 +69,10 @@ function Modal({ children }) {
   )
 }
 
+Modal.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
 function Open({ children, opens: opensWindowName }) {
   const { openWindow } = useContext(ModalContext)
 
@@ -92,6 +97,11 @@ function Window({ children, name }) {
     </Overlay>,
     document.body,
   )
+}
+
+Window.propTypes = {
+  children: PropTypes.node.isRequired,
+  name: PropTypes.string.isRequired,
 }
 
 Modal.Open = Open

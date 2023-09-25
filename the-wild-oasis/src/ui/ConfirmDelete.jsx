@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import Button from './Button'
 import Heading from './Heading'
+import PropTypes from 'prop-types'
 
 const StyledConfirmDelete = styled.div`
   width: 40rem;
@@ -39,6 +40,13 @@ function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
       </div>
     </StyledConfirmDelete>
   )
+}
+
+ConfirmDelete.propTypes = {
+  resourceName: PropTypes.string.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  onCloseModal: PropTypes.func.isRequired,
 }
 
 export default ConfirmDelete

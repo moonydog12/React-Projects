@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -70,6 +71,11 @@ function Table({ columns, children }) {
   )
 }
 
+Table.propTypes = {
+  columns: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+}
+
 function Header({ children }) {
   const { columns } = useContext(TableContext)
   return (
@@ -77,6 +83,10 @@ function Header({ children }) {
       {children}
     </StyledHeader>
   )
+}
+
+Header.propTypes = {
+  children: PropTypes.node.isRequired,
 }
 
 function Row({ children }) {
@@ -88,9 +98,18 @@ function Row({ children }) {
   )
 }
 
+Row.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
 function Body({ data, render }) {
   if (data.length === 0) return <Empty>No data to show</Empty>
   return <StyledBody>{data.map(render)}</StyledBody>
+}
+
+Body.propTypes = {
+  data: PropTypes.array.isRequired,
+  render: PropTypes.func.isRequired,
 }
 
 Table.Header = Header

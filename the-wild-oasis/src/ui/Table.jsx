@@ -13,10 +13,12 @@ const StyledTable = styled.div`
 
 const CommonRow = styled.div`
   display: grid;
-  grid-template-columns: ${(props) => props.columns};
   column-gap: 2.4rem;
   align-items: center;
   transition: none;
+
+  /* Use the $ prefix for transient prop */
+  grid-template-columns: ${({ $columns }) => $columns};
 `
 
 const StyledHeader = styled(CommonRow)`
@@ -63,23 +65,25 @@ const Empty = styled.p`
 
 const TableContext = createContext()
 
-function Table({ columns, children }) {
+function Table({ $columns, children }) {
   return (
-    <TableContext.Provider value={{ columns }}>
-      <StyledTable role="table">{children}</StyledTable>
+    <TableContext.Provider value={{ $columns }}>
+      <StyledTable role="table" $columns={$columns}>
+        {children}
+      </StyledTable>
     </TableContext.Provider>
   )
 }
 
 Table.propTypes = {
-  columns: PropTypes.string.isRequired,
+  $columns: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 }
 
 function Header({ children }) {
-  const { columns } = useContext(TableContext)
+  const { $columns } = useContext(TableContext)
   return (
-    <StyledHeader role="row" columns={columns} as="header">
+    <StyledHeader role="row" $columns={$columns} as="header">
       {children}
     </StyledHeader>
   )
@@ -90,9 +94,9 @@ Header.propTypes = {
 }
 
 function Row({ children }) {
-  const { columns } = useContext(TableContext)
+  const { $columns } = useContext(TableContext)
   return (
-    <StyledRow role="row" columns={columns}>
+    <StyledRow role="row" $columns={$columns}>
       {children}
     </StyledRow>
   )

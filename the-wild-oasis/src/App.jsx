@@ -34,7 +34,7 @@ function App() {
           <Route element={<AppLayout />}>
             <Route index element={<Navigate replace to={'dashboard'} />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="booking" element={<Booking />} />
+            <Route path="bookings" element={<Booking />} />
             <Route path="cabins" element={<Cabins />} />
             <Route path="users" element={<Users />} />
             <Route path="setting" element={<Setting />} />

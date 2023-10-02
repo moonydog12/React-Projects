@@ -41,6 +41,12 @@ function Filter({ filterField, options }) {
   const currentFilter = searchParams.get(filterField) || options.at(0).value
   const handleClick = (value) => {
     searchParams.set(filterField, value)
+
+    // Reset the page whenever the filter condition changed, so react query won't over-fetching data
+    if (searchParams.get('page')) {
+      searchParams.set('page', 1)
+    }
+
     setSearchParams(searchParams)
   }
 

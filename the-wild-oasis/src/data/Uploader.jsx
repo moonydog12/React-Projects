@@ -52,8 +52,8 @@ async function createBookings() {
     const cabin = cabins.at(booking.cabinId - 1)
     const numNights = subtractDates(booking.endDate, booking.startDate)
     const cabinPrice = numNights * (cabin.regularPrice - cabin.discount)
-    const extrasPrice = booking.hasBreakfast ? numNights * 15 * booking.numGuests : 0 // hardcoded breakfast price
-    const totalPrice = cabinPrice + extrasPrice
+    const extraPrice = booking.hasBreakfast ? numNights * 15 * booking.numGuests : 0 // hardcoded breakfast price
+    const totalPrice = cabinPrice + extraPrice
 
     let status
     if (isPast(new Date(booking.endDate)) && !isToday(new Date(booking.endDate)))
@@ -71,7 +71,7 @@ async function createBookings() {
       ...booking,
       numNights,
       cabinPrice,
-      extrasPrice,
+      extraPrice,
       totalPrice,
       guestId: allGuestIds.at(booking.guestId - 1),
       cabinId: allCabinIds.at(booking.cabinId - 1),
